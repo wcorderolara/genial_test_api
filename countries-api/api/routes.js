@@ -23,7 +23,7 @@ var routesController = function (server){
 	server.get("/category/get/:id", controllers.category.getById);
 	server.post("/category/create", controllers.category.post);
 	server.put("/category/put/:id", controllers.category.put);
-	server.put("/category/delete/:id", controllers.category.delete);
+	server.delete("/category/delete/:id", controllers.category.delete);
 
 	// Countries
 	server.get("/country/get", controllers.country.getAll);
@@ -32,7 +32,7 @@ var routesController = function (server){
 	server.post("/country/upload/avatar", multipartMiddleware, controllers.country.uploadImage);
 	server.search("/country/search/:countryName", controllers.country.search);
 	server.put("/country/put/:id", controllers.country.put);
-	server.put("/country/delete/:id", controllers.country.delete);
+	server.delete("/country/delete/:id", controllers.country.delete);
 
 	// Information
 	server.get("/info/get/country/:id", controllers.info.getCountryInfo);
@@ -48,16 +48,16 @@ var routesController = function (server){
 	server.post("/subdivision/create", controllers.subDivision.post);
 	server.post("/subdivision/upload/avatar", multipartMiddleware, controllers.subDivision.uploadImage);
 	server.put("/subdivision/put/:id", controllers.subDivision.put);
-	server.put("/subdivision/delete/:id", controllers.subDivision.delete);
-	server.put("/subdivision/delete/all/:countryId", controllers.subDivision.deleteAll);
+	server.delete("/subdivision/delete/:id", controllers.subDivision.delete);
+	server.delete("/subdivision/delete/all/:countryId", controllers.subDivision.deleteAll);
 
 	// Municipalities
 	server.get("/municipality/get/subdivision/:subId", controllers.municipality.getAll);
 	server.get("/municipality/get/:id", controllers.municipality.getById);
 	server.post("/municipality/create", controllers.municipality.post);
 	server.put("/municipality/put/:id", controllers.municipality.put);
-	server.put("/municipality/delete/:id", controllers.municipality.delete);
-	server.put("/municipality/delete/all/:subId", controllers.municipality.deleteAll);
+	server.delete("/municipality/delete/:id", controllers.municipality.delete);
+	server.delete("/municipality/delete/all/:subId", controllers.municipality.deleteAll);
 
 
 	// Users
