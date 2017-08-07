@@ -36,6 +36,8 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 SubDivision.hasMany(models.Municipality);
                 SubDivision.hasMany(models.Info, {foreignKey: {allowNull: true}});
+                SubDivision.belongsTo(models.Category);
+                SubDivision.belongsTo(models.Country);
             }
         },
         freezeTableName: true,

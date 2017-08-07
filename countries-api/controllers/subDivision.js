@@ -3,10 +3,20 @@ var models = require("../../models");
 var service = require('../services/service');
 var codes = require('../services/serverCodes.json');
 
-exports.uploadImage = (req, res, next) => {
-    let result = service.uploadImage(req.files.file.path);
-    service.sendJSONresponse(res, codes.created, {"type": true, "data": result})
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+	cloud_name: process.env.CDN_NAME,
+	api_key: process.env.CDN_API_KEY,
+	api_secret: process.env.CDN_API_SECRET
+});
+
+exports.uploadImage = function(req, res, next){
+	cloudinary.uploader.upload(req.files.file[0].path, function(result, callback){
+		service.sendJSONresponse(res,200,{"type":true,"data":result});
+	});
 }
+
 
 exports.post = (req, res, next) => {
     models.SubDivision.create({
@@ -94,18 +104,18 @@ exports.getAll = (req, res, next) => {
                 attributes: ['id','name']
             },
             {
-                modle: models.Category,
+                model: models.Category,
                 attributes: ['id','name']
             }
         ]
     }).then((response)=>{
         if(!response){
-            service.sendJSONresponse(res,codes.serverError, {"type": false, "message": service.errorMessage('Get', 'the Sub Division')});            
+            service.sendJSONresponse(res,codes.serverError, {"type": false, "message": service.errorMessage('Get', ' the Sub Division')});            
         }else {
             service.sendJSONresponse(res, codes.ok, {"type": true, "data": response});
         }
     }).catch((err)=>{
-        service.sendJSONresponse(res,codes.serverError, {"type": false, "message": service.errorMessage('Get', 'the Sub Division')});            
+        service.sendJSONresponse(res,codes.serverError, {"type": false, "message": err + service.errorMessage('Get', ' the Sub Division')});            
     })
 };
 
@@ -121,8 +131,12 @@ exports.getById = (req, res, next) => {
                 attributes: ['id','name']
             },
             {
-                modle: models.Category,
+                model: models.Category,
                 attributes: ['id','name']
+            },
+            {
+                model: models.Info,
+                attributes: ['id', 'description']
             }
         ]
     }).then((response)=>{

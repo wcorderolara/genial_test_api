@@ -18,6 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 Municipality.hasMany(models.Info, {foreignKey: {allowNull: true}});
+                Municipality.belongsTo(models.SubDivision);
             }
         },
         freezeTableName: true,

@@ -46,6 +46,13 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true
         }
     }, {
+        classMethods: {
+            associate: function(models) {
+                Info.belongsTo(models.Country);
+                Info.belongsTo(models.SubDivision);
+                Info.belongsTo(models.Municipality);
+            }
+        },
         freezeTableName: true,
         tableName: 'Info'
     });
